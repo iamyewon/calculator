@@ -7,12 +7,11 @@ let calcOperator = '';
 let result = 0;
 let endCalc = false;
 
-handleInput = (event) => {
-    
-    
-    console.log(window.getComputedStyle(currentNumber).width);
-    
+const handleInput = (event) => {
+    console.log(window.getComputedStyle(currentNumber).width); 
 }
+
+
 const handlePointBtn = (e) => {
 
     if(endCalc){
@@ -51,13 +50,16 @@ const handlePercentBtn = () => {
     currentNumber.value = Math.round((currentNumber.value / 100) * 1e10) / 1e10;
     currentNumber.value = addComma(currentNumber.value);
 
-    firstNumber = currentNumber.value;
+    if(calcOperator === ''){
+        firstNumber = currentNumber.value;
+    }else{
+        secondNumber = currentNumber.value;
+    }
 };
 
 
 const handleInputNumber = (e) => {
     const btnValue = e.target.textContent.trim();    
-    currentNumber.value = removeComma(currentNumber.value);
     
     if(endCalc){
         expression.value = '';
@@ -69,6 +71,8 @@ const handleInputNumber = (e) => {
     if(16-currentNumber.value.replace(/\D/g, '').length <= 0){
         return;
     }
+
+    currentNumber.value = removeComma(currentNumber.value);
 
     if (Number(currentNumber.value) === 0 && !currentNumber.value.includes('0.')) {
         currentNumber.value = '';
@@ -114,6 +118,7 @@ const handleOperatorBtn = (e) => {
 
 
 const handleEqualsSign = () => {
+    // depth 정리 
     if(!endCalc){
         if(secondNumber === ''){
             if(calcOperator !== ''){

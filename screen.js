@@ -34,5 +34,7 @@
 // hiddenCurrentWidth = hiddenCurrent.clientWidth;
 // console.log('hiddenCurrentWidth >>>', hiddenCurrentWidth);
 
-
+// display: none 일 때 clientWidth, offsetWidth => x
+// input 자체 내부 text값만 계산하기 x 
+// input이 글자에 따라 유동적으로 width 변경되도록 (max-width 주고) x
 
