@@ -7,16 +7,13 @@ let calcOperator = '';
 let result = 0;
 let endCalc = false;
 
-const handleInput = (event) => {
-    console.log(window.getComputedStyle(currentNumber).width); 
-}
-
+// hidden current -> current와동일하게 들어가면됨 
 
 const handlePointBtn = (e) => {
-
     if(endCalc){
         expression.value = '';
         currentNumber.value = '0';
+        hiddenCurrent.textContent = currentNumber.value;
         firstNumber = '';
         endCalc = false;
     }
@@ -25,23 +22,32 @@ const handlePointBtn = (e) => {
         return;
     } else {
         currentNumber.value += '.';
+        hiddenCurrent.textContent = currentNumber.value;
     }
+
+    handleCurrentNumberFont();
 };
 
 
 const handleClearBtn = () => {
     currentNumber.value = 0;
+    hiddenCurrent.textContent = currentNumber.value;
     expression.value = '';
     firstNumber = '';
     secondNumber = '';
     calcOperator = '';
     result = 0;
+
+    resetFont();
   };
 
 
 const handleDeleteBtn = () => {
     currentNumber.value = removeComma(currentNumber.value);
     currentNumber.value = addComma(currentNumber.value.slice(0, -1));
+    hiddenCurrent.textContent = currentNumber.value;
+
+    enlargeFont();
 };
 
 
@@ -50,11 +56,14 @@ const handlePercentBtn = () => {
     currentNumber.value = Math.round((currentNumber.value / 100) * 1e10) / 1e10;
     currentNumber.value = addComma(currentNumber.value);
 
+    hiddenCurrent.textContent = currentNumber.value;
     if(calcOperator === ''){
         firstNumber = currentNumber.value;
     }else{
         secondNumber = currentNumber.value;
     }
+
+    handleCurrentNumberFont();
 };
 
 
@@ -64,6 +73,7 @@ const handleInputNumber = (e) => {
     if(endCalc){
         expression.value = '';
         currentNumber.value = '';
+        hiddenCurrent.textContent = currentNumber.value;
         firstNumber = '';
         endCalc = false;
     }
@@ -87,7 +97,8 @@ const handleInputNumber = (e) => {
     }
 
     currentNumber.value = addComma(currentNumber.value);
-    currentNumber.dispatchEvent(new Event('input'));
+    hiddenCurrent.textContent = currentNumber.value;
+    handleCurrentNumberFont();
 };
 
 const handleOperatorBtn = (e) => {
@@ -98,6 +109,7 @@ const handleOperatorBtn = (e) => {
     const btnValue = e.target.textContent.trim();
     expression.value += ` ${Number(removeComma(currentNumber.value))} ${btnValue}`;
     currentNumber.value = 0; 
+    hiddenCurrent.textContent = currentNumber.value;
 
     if(firstNumber === ''){
         firstNumber = '0';
@@ -114,6 +126,8 @@ const handleOperatorBtn = (e) => {
         secondNumber = '';
         calcOperator = btnValue;
     }
+
+    handleCurrentNumberFont();
 };
 
 
@@ -150,8 +164,10 @@ const handleEqualsSign = () => {
         firstNumber = result;
         secondNumber = '';
         calcOperator = '';
+        hiddenCurrent.textContent = currentNumber.value;
         result = 0;
     }
 
+    handleCurrentNumberFont();
     endCalc = true;
 };
