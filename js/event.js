@@ -1,12 +1,3 @@
-const currentNumber = document.querySelector('.current-number');
-const expression = document.querySelector('.expression');
-
-let firstNumber = '';
-let secondNumber = '';
-let calcOperator = '';
-let result = 0;
-let endCalc = false;
-
 // hidden current -> current와동일하게 들어가면됨 
 
 const handlePointBtn = (e) => {

@@ -1,6 +1,3 @@
-const hiddenCurrent = document.querySelector('.hidden-current');
-
-
 const handleCurrentNumberFont = () => {
     const hiddenCurrentWidth = hiddenCurrent.clientWidth;
     const currentFontSize = parseFloat(window.getComputedStyle(currentNumber).fontSize);
