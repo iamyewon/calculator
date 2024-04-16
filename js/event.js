@@ -147,7 +147,7 @@ const handleEqualsSign = () => {
         const decimalLimit = 16-splitResult[0].length;
 
         if (result.toString().includes('.') && splitResult[1].length >= decimalLimit ){
-            currentNumber.value = result.toFixed(decimalLimit);
+            currentNumber.value = Number(result.toFixed(decimalLimit));
         }else{
             currentNumber.value = result;
         }

@@ -23,12 +23,12 @@ const calc = () => {
 
   switch(calcOperator) {
     case '+':
-      return num1 + num2;
+      return Number(num1 + num2);
     case '-':
-      return num1 - num2;
+      return Number(num1 - num2);
     case '÷':
-      return num1 / num2;
+      return Number(num1 / num2);
     case 'x':
-        return num1 * num2;
+      return Number(num1 * num2);
   } 
 }
