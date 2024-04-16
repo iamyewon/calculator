@@ -123,41 +123,43 @@ const handleOperatorBtn = (e) => {
 
 
 const handleEqualsSign = () => {
-    // depth 정리 
-    if(!endCalc){
-        if(secondNumber === ''){
-            if(calcOperator !== ''){
-                secondNumber = firstNumber;
-                result = calc();
-                expression.value += ` ${Number(secondNumber)} =`;
-                currentNumber.value = addComma(result);
-            }else{
-                expression.value = `${Number(firstNumber)} =`
-                result = Number(firstNumber);
-                currentNumber.value = addComma(result);
-            }
-        }else{ 
-            result = calc();
-            expression.value = `${expression.value} ${Number(secondNumber)} =`;
-
-            const splitResult = result.toString().split('.');
-            const decimalLimit = 16-splitResult[0].length;
-
-            if (result.toString().includes('.') && splitResult[1].length >= decimalLimit ){
-                currentNumber.value = result.toFixed(decimalLimit);
-            }else{
-                currentNumber.value = result;
-            }
-
-            currentNumber.value = addComma(currentNumber.value);
-        }
-
-        firstNumber = result;
-        secondNumber = '';
-        calcOperator = '';
-        hiddenCurrent.textContent = currentNumber.value;
-        result = 0;
+    if(endCalc){
+        return;
     }
+
+    if(secondNumber === ''){
+        if(calcOperator !== ''){
+            secondNumber = firstNumber;
+            result = calc();
+            expression.value += ` ${Number(secondNumber)} =`;
+            currentNumber.value = addComma(result);
+        }else{
+            expression.value = `${Number(firstNumber)} =`
+            result = Number(firstNumber);
+            currentNumber.value = addComma(result);
+        }
+    }else{ 
+        result = calc();
+        console.log(result);
+        expression.value = `${expression.value} ${Number(secondNumber)} =`;
+
+        const splitResult = result.toString().split('.');
+        const decimalLimit = 16-splitResult[0].length;
+
+        if (result.toString().includes('.') && splitResult[1].length >= decimalLimit ){
+            currentNumber.value = result.toFixed(decimalLimit);
+        }else{
+            currentNumber.value = result;
+        }
+        currentNumber.value = addComma(currentNumber.value);
+    }
+
+    firstNumber = result;
+    secondNumber = '';
+    calcOperator = '';
+    hiddenCurrent.textContent = currentNumber.value;
+    result = 0;
+    
 
     handleCurrentNumberFont();
     endCalc = true;
