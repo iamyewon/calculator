@@ -3,7 +3,7 @@ const handleCurrentNumberFont = () => {
     const currentFontSize = parseFloat(window.getComputedStyle(currentNumber).fontSize);
     const hiddenCurrentFontSize = parseFloat(window.getComputedStyle(hiddenCurrent).fontSize);
 
-    if(hiddenCurrentWidth >= 300){
+    if(hiddenCurrentWidth >= 280){
         currentNumber.style.fontSize = (currentFontSize * 0.94) + 'px'; 
         hiddenCurrent.style.fontSize = (hiddenCurrentFontSize * 0.94) + 'px'; 
     }
