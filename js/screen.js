@@ -1,3 +1,4 @@
+// 입력된 CurrentNumber의 width가 일정 길이 이상이면 폰트 줄임 
 const handleCurrentNumberFont = () => {
     const hiddenCurrentWidth = hiddenCurrent.clientWidth;
     const currentFontSize = parseFloat(window.getComputedStyle(currentNumber).fontSize);
@@ -9,6 +10,7 @@ const handleCurrentNumberFont = () => {
     }
 }
 
+// delete버튼 누를 때 CurrentNumber의 width가 일정 길이 이하면 폰트 키움 
 const enlargeFont = () => {
     const hiddenCurrentWidth = hiddenCurrent.clientWidth;
     const currentFontSize = parseFloat(window.getComputedStyle(currentNumber).fontSize);
@@ -25,14 +27,8 @@ const enlargeFont = () => {
     }
 }
 
+// clear 버튼으로 모두 지웠을 때 폰트 크기 초기화 
 const resetFont = () => {
     currentNumber.style.fontSize = '40px'; 
     hiddenCurrent.style.fontSize = '40px'; 
 }
-
-
-
-// display: none 일 때 clientWidth, offsetWidth => x
-// input 자체 내부 text값만 계산하기 x 
-// input이 글자에 따라 유동적으로 width 변경되도록 (max-width 주고) x
-

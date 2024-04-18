@@ -7,7 +7,6 @@ const handlePointBtn = (e) => {
         firstNumber = '';
         endCalc = false;
     }
-
     // 소수점이 이미 있는 경우 함수 종료 
     if (currentNumber.value.includes('.')) {
         return;
@@ -83,7 +82,7 @@ const handleInputNumber = (e) => {
 
     currentNumber.value += btnValue;
 
-    // 첫번째 숫자에 넣어줄지, 두번째 숫자에 넣어줄지 
+    // 누른 숫자를 첫번째 숫자에 넣어줄지, 두번째 숫자에 넣어줄지 
     if(calcOperator === ''){
         firstNumber = currentNumber.value;
     }else{
@@ -92,6 +91,7 @@ const handleInputNumber = (e) => {
 
     currentNumber.value = addComma(currentNumber.value);
     hiddenCurrent.textContent = currentNumber.value;
+    console.log(hiddenCurrent.clientWidth);
     handleCurrentNumberFont();
 };
 
@@ -117,10 +117,6 @@ const handleOperatorBtn = (e) => {
     // operator 없는 경우 버튼값 넣어줌
     if(calcOperator === ''){ 
         calcOperator = btnValue;
-        // TODO : 검증
-        // if(secondNumber !== ''){
-        //     secondNumber = '';
-        // }
     }else{ // operator 있는 경우
         result = calc();
         firstNumber = result;
@@ -140,9 +136,10 @@ const handleEqualsSign = () => {
     if(secondNumber !== '') {
         calculateTwoNumbers();
         handleEndCalc();
-        if(hiddenCurrent.clientWidth >= 300){
-            handleCurrentNumberFont();
-        }
+
+        console.log(currentNumber.value);
+        console.log(hiddenCurrent.textContent);
+        console.log(hiddenCurrent.clientWidth);
         return;
     }
     
