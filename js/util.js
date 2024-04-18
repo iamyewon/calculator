@@ -79,3 +79,4 @@ const handleEndCalc = () => {
 }
 
 
+// TODO : handleClearBtn 와 동일기능 

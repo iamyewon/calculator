@@ -28,7 +28,7 @@ const handleClearBtn = () => {
     result = 0;
 
     resetFont();
-  };
+};
 
 
 const handleDeleteBtn = () => {
@@ -41,6 +41,10 @@ const handleDeleteBtn = () => {
 
 
 const handlePercentBtn = () => {
+    // TODO : 동일한 = 세가지 -> 1번으로 
+    // 우선은 알고리즘 처리를 각함수에서 해보기 .
+    // 밸류에 들어가는건 딱 한번이면 됨 
+
     currentNumber.value = removeComma(currentNumber.value);
     currentNumber.value = Math.round((currentNumber.value / 100) * 1e10) / 1e10;
     currentNumber.value = addComma(currentNumber.value);
@@ -60,6 +64,7 @@ const handleInputNumber = (e) => {
     const btnValue = e.target.textContent.trim();    
     
     // 계산이 끝나고 Number 버튼 눌렀을 경우 
+    // TODO : value 값들 넣어주는 것도 인자로 받아서 할 수 있음 
     if(endCalc){
         expression.value = '';
         currentNumber.value = '';
