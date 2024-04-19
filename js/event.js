@@ -18,19 +18,6 @@ const handlePointBtn = (e) => {
 };
 
 
-const handleClearBtn = () => {
-    currentNumber.value = 0;
-    hiddenCurrent.textContent = currentNumber.value;
-    expression.value = '';
-    firstNumber = '';
-    secondNumber = '';
-    calcOperator = '';
-    result = 0;
-
-    resetFont();
-};
-
-
 const handleDeleteBtn = () => {
     currentNumber.value = removeComma(currentNumber.value);
     currentNumber.value = addComma(currentNumber.value.slice(0, -1));
@@ -41,13 +28,7 @@ const handleDeleteBtn = () => {
 
 
 const handlePercentBtn = () => {
-    // TODO : 동일한 = 세가지 -> 1번으로 
-    // 우선은 알고리즘 처리를 각함수에서 해보기 .
-    // 밸류에 들어가는건 딱 한번이면 됨 
-
-    currentNumber.value = removeComma(currentNumber.value);
-    currentNumber.value = Math.round((currentNumber.value / 100) * 1e10) / 1e10;
-    currentNumber.value = addComma(currentNumber.value);
+    currentNumber.value = addComma(Math.round((removeComma(currentNumber.value) / 100) * 1e10) / 1e10)
     hiddenCurrent.textContent = currentNumber.value;
 
     if(calcOperator === ''){
@@ -55,7 +36,6 @@ const handlePercentBtn = () => {
     }else{
         secondNumber = currentNumber.value;
     }
-
     handleCurrentNumberFont();
 };
 
@@ -65,7 +45,9 @@ const handleInputNumber = (e) => {
     
     // 계산이 끝나고 Number 버튼 눌렀을 경우 
     // TODO : value 값들 넣어주는 것도 인자로 받아서 할 수 있음 
+
     if(endCalc){
+        // inputValues('', null, '', '', '', null);
         expression.value = '';
         currentNumber.value = '';
         hiddenCurrent.textContent = currentNumber.value;
@@ -96,15 +78,14 @@ const handleInputNumber = (e) => {
 
     currentNumber.value = addComma(currentNumber.value);
     hiddenCurrent.textContent = currentNumber.value;
-    console.log(hiddenCurrent.clientWidth);
     handleCurrentNumberFont();
 };
 
 
 
 const handleOperatorBtn = (e) => {
-    // 계산이 끝나고 Operator 누른 경우 
     if(endCalc){
+        console.log("계산끝나고 oper누름");
         expression.value = '';
         endCalc = false;
     }
@@ -140,11 +121,7 @@ const handleEqualsSign = () => {
     /* secondNumber가 있는경우 : 계산진행 */
     if(secondNumber !== '') {
         calculateTwoNumbers();
-        handleEndCalc();
-
-        console.log(currentNumber.value);
-        console.log(hiddenCurrent.textContent);
-        console.log(hiddenCurrent.clientWidth);
+        clearCalculator('endCalc');
         return;
     }
     
@@ -161,5 +138,5 @@ const handleEqualsSign = () => {
         result = Number(firstNumber);
         currentNumber.value = addComma(result);
     }
-    handleEndCalc();
+    clearCalculator('endCalc');
 };
