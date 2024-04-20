@@ -6,19 +6,10 @@ const removeComma = (value) => {
 const addComma = (value) => {
     const splitValue = value.toString().split('.');
     const decimalLimit = 16-splitValue[0].length;
-
-    const numLimit = splitValue[1]?.length;
+    const numLimit = splitValue[1] ? splitValue[1].length : 0;
     const option =  { maximumFractionDigits: decimalLimit, minimumFractionDigits:numLimit}
-    // if (splitValue[1]){
-    //     option = {...option, minimumFractionDigits :splitValue[1].length}
-    // }
-    // const option = {
-    //     maximumFractionDigits: decimalLimit,
-    //     minimumFractionDigits: splitValue[1] ? splitValue[1].length : numLimit
-    // };
 
-    return Number(value).toLocaleString(undefined, option);
-    // util.js:15 Uncaught RangeError: maximumFractionDigits value is out of range.
+    return result.toString().replace('.', '').length > 16 ?  Number(value).toLocaleString('ko-KR') : Number(value).toLocaleString('ko-KR', option);
 }
 
 const calc = () => {
@@ -57,22 +48,22 @@ const handleDecimalLimit = () => {
         hiddenCurrent.textContent = currentNumber.value;
     }else{
         hiddenCurrent.textContent = result;
-        handleResultFontSize();
+        // handleResultFontSize();
         currentNumber.value = result;
     }
 }
 
 // click clear btn + endCalc
 const clearCalculator = (func) => {
-    if(func === 'clear'){
+    if(func === clearType.CLEAR){
         firstNumber = '';
         expression.value = '';
         currentNumber.value = 0;
         resetFont();
-    }else if(func === 'endCalc'){
-        endCalc = true
+    }else if(func === clearType.END){
         firstNumber = result;
-        handleResultFontSize();
+        // handleResultFontSize();
+        endCalc = true; 
     }
     secondNumber = '';
     calcOperator = '';
@@ -81,12 +72,7 @@ const clearCalculator = (func) => {
 }
 
 
-// 오버로딩? 인자 다를 때마다 ?
-// value들 값 넣어주는 함수 
-// 호출부에서 객체로 던져서 타입같은걸로 지정해서 있는 키로판단해서 값을 넣어주는? 
-
-
-// 없는 값은 null로 처리해서  ? 그럼 null이 들어가버리면? 
+// TODO 
 const inputValues = (firstNumberValue, secondNumberValue, expressionValue, currentNumberValue, calcOperatorValue) => {
     firstNumber = firstNumberValue;
     secondNumber = secondNumberValue;
@@ -95,3 +81,4 @@ const inputValues = (firstNumberValue, secondNumberValue, expressionValue, curre
     hiddenCurrent.textContent = currentNumberValue;
     calcOperator = calcOperatorValue;
 }
+

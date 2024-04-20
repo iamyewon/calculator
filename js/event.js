@@ -21,6 +21,11 @@ const handlePointBtn = (e) => {
 const handleDeleteBtn = () => {
     currentNumber.value = removeComma(currentNumber.value);
     currentNumber.value = addComma(currentNumber.value.slice(0, -1));
+
+    // TODO - removeComma - process - addComma
+    // const number = test(currentNumber.value);
+    // number.slice(0,1);
+
     hiddenCurrent.textContent = currentNumber.value;
 
     enlargeFont();
@@ -44,8 +49,6 @@ const handleInputNumber = (e) => {
     const btnValue = e.target.textContent.trim();    
     
     // 계산이 끝나고 Number 버튼 눌렀을 경우 
-    // TODO : value 값들 넣어주는 것도 인자로 받아서 할 수 있음 
-
     if(endCalc){
         // inputValues('', null, '', '', '', null);
         expression.value = '';
@@ -85,7 +88,6 @@ const handleInputNumber = (e) => {
 
 const handleOperatorBtn = (e) => {
     if(endCalc){
-        console.log("계산끝나고 oper누름");
         expression.value = '';
         endCalc = false;
     }
@@ -121,8 +123,8 @@ const handleEqualsSign = () => {
     /* secondNumber가 있는경우 : 계산진행 */
     if(secondNumber !== '') {
         calculateTwoNumbers();
-        clearCalculator('endCalc');
-        return;
+        clearCalculator(clearType.END);
+        return; 
     }
     
     /* secondNumber가 없는경우 */
@@ -138,5 +140,11 @@ const handleEqualsSign = () => {
         result = Number(firstNumber);
         currentNumber.value = addComma(result);
     }
-    clearCalculator('endCalc');
+    clearCalculator(clearType.END);
 };
+
+// const test = (value, processFunc) => {
+//     removeComma(value);
+//     processFunc();
+//     return addComma(value);
+// }

@@ -27,19 +27,40 @@ const enlargeFont = () => {
     }
 }
 
-const handleResultFontSize = () => {
-    if(hiddenCurrent.clientWidth >= 315){
-        while(hiddenCurrent.clientWidth >= 315){
-            const currentFontSize = parseFloat(window.getComputedStyle(currentNumber).fontSize);
-            const hiddenCurrentFontSize = parseFloat(window.getComputedStyle(hiddenCurrent).fontSize);
-            currentNumber.style.fontSize = (currentFontSize * 0.94) + 'px'; 
-            hiddenCurrent.style.fontSize = (hiddenCurrentFontSize * 0.94) + 'px';
-        }
-    }
-}
+// const handleResultFontSize = () => {
+//     if(hiddenCurrent.clientWidth >= 315){
+//         while(hiddenCurrent.clientWidth >= 315){
+//             const currentFontSize = parseFloat(window.getComputedStyle(currentNumber).fontSize);
+//             const hiddenCurrentFontSize = parseFloat(window.getComputedStyle(hiddenCurrent).fontSize);
+//             currentNumber.style.fontSize = (currentFontSize * 0.94) + 'px'; 
+//             hiddenCurrent.style.fontSize = (hiddenCurrentFontSize * 0.94) + 'px';
+//         }
+//     }
+// }
 
 // clear 버튼으로 모두 지웠을 때 폰트 크기 초기화 
 const resetFont = () => {
     currentNumber.style.fontSize = '40px'; 
     hiddenCurrent.style.fontSize = '40px'; 
 }
+
+let hiddenCurrentObserver = new ResizeObserver(entries => {
+    let resultHidden;
+    let resultCur;
+    
+    for (let entry of entries) {
+      const {contentRect} = entry;
+
+    if(contentRect.width > 315){
+        const currentFontSize = parseFloat(window.getComputedStyle(currentNumber).fontSize);
+        const hiddenCurrentFontSize = parseFloat(window.getComputedStyle(hiddenCurrent).fontSize);
+        
+        resultCur = (currentFontSize * 0.94) + 'px'; 
+        resultHidden = (hiddenCurrentFontSize * 0.94) + 'px';
+      }
+    }
+    currentNumber.style.fontSize = resultCur;
+    hiddenCurrent.style.fontSize = resultHidden;
+});
+
+hiddenCurrentObserver.observe(hiddenCurrent);
