@@ -6,8 +6,8 @@
     <title>calculator</title>
     <link rel="stylesheet" href="css/index.css" />
     <script src="js/index.js" defer></script>
-    <script src="js/util.js" defer></script>
     <script src="js/screen.js" defer></script>
+    <script src="js/util.js" defer></script>
     <script src="js/event.js" defer></script>
   </head>
   <body>
@@ -41,7 +41,7 @@
           <button class="operator-btn" onclick="handleOperatorBtn(event)">+</button>
           <button class="point-btn" onclick="handlePointBtn(event)">.</button>
           <button class="number-btn" onclick="handleInputNumber(event)">0</button>
-          <button type="button" class="delete-btn" onclick="handleDeleteBtn(event)">
+          <button type="button" class="delete-btn" onclick="handleDeleteBtn()">
             <img src="img/delete.png" alt="delete icon" />
           </button>
           <button class="equals-sign" onclick="handleEqualsSign()">=</button>

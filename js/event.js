@@ -1,150 +1,156 @@
+/**
+ * 소수점 버튼을 누를 때 호출되는 함수
+ * @param {Event} e event
+ * @author 웹팀 김예원 2024-04-22
+ * @description 계산이 끝난 직후 .누르면 0. 으로 시작
+ * @description 소수점이 이미 있는 경우 함수 종료 
+ */
 const handlePointBtn = (e) => {
-    // 계산이 끝난 직후 . 을 누르면 0. 으로 숫자 시작하도록 
     if(endCalc){
-        expression.value = '';
-        currentNumber.value = '0';
-        hiddenCurrent.textContent = currentNumber.value;
-        firstNumber = '';
+        inputScreenValues('', 0);
+        inputCalcValues('', null, null);
         endCalc = false;
     }
-    // 소수점이 이미 있는 경우 함수 종료 
     if (currentNumber.value.includes('.')) {
         return;
     } 
 
-    currentNumber.value += '.';
-    hiddenCurrent.textContent = currentNumber.value;
+    inputCurrentNumber(currentNumber.value + '.');
     handleCurrentNumberFont();
 };
 
 
+
+/**
+ * 지우기 버튼 누를 때 호출되는 함수 
+ * @author 웹팀 김예원 2024-04-22
+ */
 const handleDeleteBtn = () => {
-    currentNumber.value = removeComma(currentNumber.value);
-    currentNumber.value = addComma(currentNumber.value.slice(0, -1));
-
-    // TODO - removeComma - process - addComma
-    // const number = test(currentNumber.value);
-    // number.slice(0,1);
-
-    hiddenCurrent.textContent = currentNumber.value;
-
+    inputScreenValues(null, addComma(removeComma(currentNumber.value).slice(0, -1)))
     enlargeFont();
 };
 
 
+
+/**
+ * 퍼센트 버튼 누를 때 호출되는 함수
+ * @author 웹팀 김예원 2024-04-22
+ * @description 현재 입력된 숫자에서 1/100 계산
+ */
 const handlePercentBtn = () => {
-    currentNumber.value = addComma(Math.round((removeComma(currentNumber.value) / 100) * 1e10) / 1e10)
-    hiddenCurrent.textContent = currentNumber.value;
+    inputScreenValues(null, addComma(Math.round((removeComma(currentNumber.value) / 100) * 1e10) / 1e10));
 
     if(calcOperator === ''){
-        firstNumber = currentNumber.value;
+        inputFirstNumber(currentNumber.value);
     }else{
-        secondNumber = currentNumber.value;
+        inputSecondNumber(currentNumber.value);
     }
     handleCurrentNumberFont();
 };
 
 
+
+/**
+ * 숫자 버튼을 누를 때 호출 되는 함수 
+ * @param {Event} e event
+ * @author 웹팀 김예원 2024-04-22
+ * @description =으로 결과 도출 후(계산이 끝난 직후) -> 새로운 계산 시작
+ * @description 입력 숫자 길이는 총 16자리 
+ * @description 숫자가 0으로 시작하면 0을 지워줌
+ * 
+ */
 const handleInputNumber = (e) => {
     const btnValue = e.target.textContent.trim();    
     
-    // 계산이 끝나고 Number 버튼 눌렀을 경우 
     if(endCalc){
-        // inputValues('', null, '', '', '', null);
-        expression.value = '';
-        currentNumber.value = '';
-        hiddenCurrent.textContent = currentNumber.value;
-        firstNumber = '';
+        inputScreenValues('', '');
+        inputFirstNumber('');
         endCalc = false;
     }
 
-    // 입력 가능 숫자를 16자리로 제한 
     if(16-currentNumber.value.replace(/\D/g, '').length <= 0){
         return;
     }
 
-    currentNumber.value = removeComma(currentNumber.value);
+    inputCurrentNumber(removeComma(currentNumber.value));
 
-    // 0으로 시작하는 경우(0. 제외) 제일 앞의 0을 없애줌
     if (Number(currentNumber.value) === 0 && !currentNumber.value.includes('0.')) {
-        currentNumber.value = '';
+        inputCurrentNumber('');
     }
 
-    currentNumber.value += btnValue;
+    inputCurrentNumber(currentNumber.value + btnValue);
 
-    // 누른 숫자를 첫번째 숫자에 넣어줄지, 두번째 숫자에 넣어줄지 
     if(calcOperator === ''){
-        firstNumber = currentNumber.value;
+        inputFirstNumber(currentNumber.value);
     }else{
-        secondNumber = currentNumber.value;
+        inputSecondNumber(currentNumber.value);
     }
-
-    currentNumber.value = addComma(currentNumber.value);
-    hiddenCurrent.textContent = currentNumber.value;
+    inputCurrentNumber(addComma(currentNumber.value))
     handleCurrentNumberFont();
 };
 
 
-
+/**
+ * 연산자 버튼을 누를 때 호출 되는 함수 
+ * @param {Event} e event
+ * @author 웹팀 김예원 2024-04-22
+ * @description =으로 결과 도출 후(계산이 끝난 직후) -> 결과값 + 연산자 
+ * @description 입력숫자가 초기상태(0)일 때 누르면 0 + 연산자
+ */
 const handleOperatorBtn = (e) => {
     if(endCalc){
-        expression.value = '';
+        inputExpreesion('');
         endCalc = false;
     }
 
     const btnValue = e.target.textContent.trim();
-    expression.value += ` ${Number(removeComma(currentNumber.value))} ${btnValue}`;
-    currentNumber.value = 0; 
-    hiddenCurrent.textContent = currentNumber.value;
 
-    // firstNumber가 없으면 firstNumber = 0
+    inputScreenValues(expression.value + ` ${Number(removeComma(currentNumber.value))} ${btnValue}`, 0)
+
     if(firstNumber === ''){
-        firstNumber = '0';
+        inputFirstNumber(0);
     }
 
-    // operator 없는 경우 버튼값 넣어줌
     if(calcOperator === ''){ 
-        calcOperator = btnValue;
-    }else{ // operator 있는 경우
+        inputCalcOperator(btnValue);
+    }else{
         result = calc();
-        firstNumber = result;
-        secondNumber = '';
-        calcOperator = btnValue;
+        inputCalcValues(result, '', btnValue);
     }
-    handleCurrentNumberFont();
+    resetFont();    
 };
 
 
+
+/**
+ * = 버튼을 누를 때 호출 되는 함수 
+ * @author 웹팀 김예원 2024-04-22
+ * @description secondNumber가 있으면 일반적인 계산 
+ * @description secondNumber가 없지만 연산자가 있으면 firstNumber = secondNumber
+ * @description secondNumber가 없고 연산자가 없으면 firstNumber = result
+ */
 const handleEqualsSign = () => {
     if(endCalc){
         return;
     }
 
-    /* secondNumber가 있는경우 : 계산진행 */
     if(secondNumber !== '') {
         calculateTwoNumbers();
         clearCalculator(clearType.END);
         return; 
     }
     
-    /* secondNumber가 없는경우 */
     if(calcOperator !== ''){
-        // 연산자가 있으면 secondNumber = firstNumber 로 계산 ex) 5 + =  ==> 5 + 5 =
-        secondNumber = firstNumber;
-        result = calc();
-        expression.value += ` ${Number(secondNumber)} =`;
-        currentNumber.value = addComma(result);
+        inputSecondNumber(firstNumber);
+        inputResult(calc());
+        inputScreenValues(expression.value + ` ${Number(secondNumber)} =`, addComma(result));
     } else {
-        // 연산자가 없으면 firstNumber = result  ex) 5 = 5 
-        expression.value = `${Number(firstNumber)} =`
-        result = Number(firstNumber);
-        currentNumber.value = addComma(result);
+        inputExpreesion(`${Number(firstNumber)} =`)
+        inputResult(Number(firstNumber));
+        inputCurrentNumber(addComma(result));
     }
+
     clearCalculator(clearType.END);
 };
 
-// const test = (value, processFunc) => {
-//     removeComma(value);
-//     processFunc();
-//     return addComma(value);
-// }
+

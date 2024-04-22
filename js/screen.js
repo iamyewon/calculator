@@ -1,4 +1,8 @@
-// 입력된 CurrentNumber의 width가 일정 길이 이상이면 폰트 줄임 
+/**
+ * CurrentNumber 폰트 줄임
+ * @author 웹팀 김예원 2024-04-22
+ * @description 입력된 CurrentNumber의 width가 일정 길이 이상이면 폰트 줄임 
+ */
 const handleCurrentNumberFont = () => {
     const hiddenCurrentWidth = hiddenCurrent.clientWidth;
     const currentFontSize = parseFloat(window.getComputedStyle(currentNumber).fontSize);
@@ -10,7 +14,13 @@ const handleCurrentNumberFont = () => {
     }
 }
 
-// delete버튼 누를 때 CurrentNumber의 width가 일정 길이 이하면 폰트 키움 
+
+
+/**
+ * CurrentNumber 폰트 키움
+ * @author 웹팀 김예원 2024-04-22
+ * @description delete버튼 누를 때 CurrentNumber의 width가 일정 길이 이하면 폰트 키움 
+ */
 const enlargeFont = () => {
     const hiddenCurrentWidth = hiddenCurrent.clientWidth;
     const currentFontSize = parseFloat(window.getComputedStyle(currentNumber).fontSize);
@@ -38,7 +48,11 @@ const enlargeFont = () => {
 //     }
 // }
 
-// clear 버튼으로 모두 지웠을 때 폰트 크기 초기화 
+/**
+ * CurrentNumber 폰트 초기화
+ * @author 웹팀 김예원 2024-04-22
+ * @description currentNumber 한번에 모두 지웠을 때 폰트 크기 초기화
+ */ 
 const resetFont = () => {
     currentNumber.style.fontSize = '40px'; 
     hiddenCurrent.style.fontSize = '40px'; 
